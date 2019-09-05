@@ -5,18 +5,18 @@
 */
 
 //function getGithubCardMaker() {
-  axios.get('https://api.github.com/users/ojokure')
-    .then(res => {
-      const data = res.data;
-      const card = createGitCard(data);
-      const cards = document.querySelector('.cards')
-      cards.appendChild(card);
-      debugger
-    })
-    .catch(err => {
-      document.body.innerText = err.message;
-     debugger
-    });
+axios.get('https://api.github.com/users/ojokure')
+  .then(res => {
+    const data = res.data;
+    const card = createGitCard(data);
+    const cards = document.querySelector('.cards')
+    cards.appendChild(card);
+    // debugger
+  })
+  .catch(err => {
+    document.body.innerText = err.message;
+    //  debugger
+  });
 // //}
 
 
@@ -38,7 +38,9 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['osammy', 'durotolu', 'jasynmarais', 'richanynguon', 'domeccleston'];
+
+followersArray.forEach((el) => el.card);
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -60,7 +62,7 @@ const followersArray = [];
 
 */
 
-function createGitCard(githubdata) {
+function createGitCard(el) {
 
   const cardDiv = document.createElement('div');
 
@@ -70,27 +72,44 @@ function createGitCard(githubdata) {
 
   cardDiv.appendChild(userImg)
 
-  userImg.setAttribute('src', githubdata.avatar_url);
+  userImg.setAttribute('src', el.avatar_url);
 
   const cardInfoDiv = document.createElement('div');
 
-  
+
   const h3Name = document.createElement('h3');
+
+  h3Name.textContent = el.name
 
   const pUsername = document.createElement('p');
 
+  pUsername.textContent = `username ${el.login}`
+
   const pLocation = document.createElement('p');
+
+  pLocation.textContent = `Location : ${el.location}`
 
   const pProfile = document.createElement('p');
 
-  
+  pProfile.textContent = 'Profile :'
+
   const userAddressAnchor = document.createElement('a');
+
+  userAddressAnchor.textContent = ' address to users github page'
+
+  userAddressAnchor.setAttribute('href', el.html_url);
 
   const pFollowers = document.createElement('p');
 
+  pFollowers.textContent = `Followers: ${el.followers}`
+
   const pFollowings = document.createElement('p');
 
+  pFollowings.textContent = `Followings: ${el.following}`
+
   const pBio = document.createElement('p');
+
+  pBio.textContent = el.bio
 
   cardInfoDiv.appendChild(h3Name);
 
@@ -115,9 +134,6 @@ function createGitCard(githubdata) {
   return cardDiv
 }
 
-
-
-// createGitCard({avatar_url:"https://avatars0.githubusercontent.com/u/51193046?v=4"});
 /* List of LS Instructors Github username's:
   tetondan
   dustinmyers
