@@ -5,17 +5,22 @@
 */
 
 //function getGithubCardMaker() {
-axios.get('https://api.github.com/users/ojokure')
+  axios({
+    method:'get',
+    url: "https://api.github.com/users/ojokure",
+    auth: {
+        username: 'ojokure',
+        password: 'Anthonyojo1'
+    }
+})
   .then(res => {
     const data = res.data;
     const card = createGitCard(data);
     const cards = document.querySelector('.cards')
     cards.appendChild(card);
-    // debugger
   })
   .catch(err => {
     document.body.innerText = err.message;
-    //  debugger
   });
 // //}
 
@@ -38,9 +43,27 @@ axios.get('https://api.github.com/users/ojokure')
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['osammy', 'durotolu', 'jasynmarais', 'richanynguon', 'domeccleston'];
+ const followersArray = ['osammy', 'durotolu', 'jasynmarais', 'richanynguon', 'domeccleston'];
+    followersArray.forEach((el) => {
+      axios({
+        method:'get',
+        url: "https://api.github.com/users/" + el,
+        auth: {
+            username: 'ojokure',
+            password: 'Anthonyojo1'
+        }
+    })
+      .then(res => {
+        const data = res.data;
+        const card = createGitCard(data);
+        const cards = document.querySelector('.cards')
+        cards.appendChild(card);
+      })
+      .catch(err => {
+        document.body.innerText = err.message;
+      });
+    })
 
-followersArray.forEach((el) => el.card);
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -81,6 +104,8 @@ function createGitCard(el) {
 
   h3Name.textContent = el.name
 
+  h3Name.setAttribute('class', 'name');
+
   const pUsername = document.createElement('p');
 
   pUsername.textContent = `username ${el.login}`
@@ -95,7 +120,7 @@ function createGitCard(el) {
 
   const userAddressAnchor = document.createElement('a');
 
-  userAddressAnchor.textContent = ' address to users github page'
+  userAddressAnchor.textContent = el.html_url
 
   userAddressAnchor.setAttribute('href', el.html_url);
 
