@@ -2,10 +2,22 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
           
-*/ 
+*/
 
-
-      axios.get('https://api.github.com/users/ojokure')
+//function getGithubCardMaker() {
+  axios.get('https://api.github.com/users/ojokure')
+    .then(res => {
+      const data = res.data;
+      const card = createGitCard(data);
+      const cards = document.querySelector('.cards')
+      cards.appendChild(card);
+      debugger
+    })
+    .catch(err => {
+      document.body.innerText = err.message;
+     debugger
+    });
+// //}
 
 
 // /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -48,17 +60,65 @@ const followersArray = [];
 
 */
 
-function createGitCard (postMan){
+function createGitCard(githubdata) {
 
-const cardDiv = document.createElement('div');
+  const cardDiv = document.createElement('div');
 
+  cardDiv.classList.add('card');
 
+  const userImg = document.createElement('img');
 
+  cardDiv.appendChild(userImg)
 
+  userImg.setAttribute('src', githubdata.avatar_url);
 
+  const cardInfoDiv = document.createElement('div');
+
+  
+  const h3Name = document.createElement('h3');
+
+  const pUsername = document.createElement('p');
+
+  const pLocation = document.createElement('p');
+
+  const pProfile = document.createElement('p');
+
+  
+  const userAddressAnchor = document.createElement('a');
+
+  const pFollowers = document.createElement('p');
+
+  const pFollowings = document.createElement('p');
+
+  const pBio = document.createElement('p');
+
+  cardInfoDiv.appendChild(h3Name);
+
+  cardInfoDiv.appendChild(pUsername);
+
+  cardInfoDiv.appendChild(pLocation);
+
+  cardInfoDiv.appendChild(pProfile);
+
+  cardInfoDiv.appendChild(pFollowers);
+
+  cardInfoDiv.appendChild(pFollowings);
+
+  cardInfoDiv.appendChild(pBio);
+
+  cardDiv.appendChild(cardInfoDiv);
+
+  pProfile.appendChild(userAddressAnchor);
+
+  // console.log(cardDiv);
+
+  return cardDiv
 }
 
-/* List of LS Instructors Github username's: 
+
+
+// createGitCard({avatar_url:"https://avatars0.githubusercontent.com/u/51193046?v=4"});
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
